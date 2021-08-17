@@ -1,0 +1,22 @@
+version: '3'
+
+
+services:
+  mysqldb:
+    image: mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=jado
+    - MYSQL_DATABASE=risaproject
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=jado
+  springboot-docker-container:
+   image: appp
+   ports:
+      - 9090:8080
+   environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/risaproject?autoReconnect=true&useSSL=false
+   build:
+     context: ./
+     dockerfile: Dockerfile
+   depends_on:
+     - mysqldb
